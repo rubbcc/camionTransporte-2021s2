@@ -4,6 +4,17 @@ Una empresa de transporte quiere administrar mejor las cargas que lleva un cami�
 
 Para eso requiere un sistema que le permita planificar qué cosas debe llevar el camión sin sobrepasar su capacidad. Por otro lado, las cosas que transporta tienen un nivel de peligrosidad. Este nivel es usado para impedir que cosas que superen cierto nivel de peligrosidad circulen en determinadas rutas.
 
+## Atención - instrucciones para la entrega
+El método `totalBultos()` y las consecuencias de la carga (ver abajo), pueden resultar más complejas que el resto. Si no les sale, no es grave, entreguen hasta donde les salga, y lo hablamos en clase. La consecuencia de la carga hace más complicados los tests. 
+
+Por eso, les pedimos que se organicen de esta forma.
+- Resolver hasta "agregados al camión" en los archivos `camion.wlk` y `cosas.wlk`.
+- Armar dos tests, `cosasTest.wtest` y `camionTest.wtest`.
+- Copiar `camion.wlk` y `cosas.wlk` a `camion2.wlk` y `cosas2.wlk`.
+- Resolver "total de bultos" y "consecuencia de la carga" sobre `camion2.wlk` y `cosas2.wlk`. Así queda limpia la resolución de los puntos previos.
+- Si hacen tests de "total de bultos" y "consecuencia de la carga", hacerlos en un archivo aparte, que haga `import` de `camion2.wlk` y `cosas2.wlk`. Así los tests también nos quedan separados.
+
+
 ## El camión
 Se pide que el camión entienda los siguientes mensajes:
 
@@ -35,6 +46,17 @@ Se pide agregar estos mensajes al camión:
 * `tieneAlgoQuePesaEntre(min, max)`: indica si el peso de alguna de las cosas que tiene el camión está en ese intervalo;
 * `cosaMasPesada()`: la cosa más pesada que tenga el camión. Ojo que lo que se pide es _la cosa_ y no su peso.
 * `pesos()`: devuelve una lista con _los pesos_ de cada cosa que tiene el camión.
+
+
+## Tests hasta acá
+Hay que hacer un pequeño test para cada una de las siguientes cosas: paquete de ladrillos, batería antiaérea, contenedor portuario y embalaje de seguridad. Al embalaje ponerle adentro los residuos radioactivos con 30 kg de peso. Al contenedor, dos o tres cosas a elección. Todo esto en un archivo `cosasTest.wtest`.
+
+Por otro lado, armar un test del camión, cargado con lo siguiente: bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos.  
+Para cada método, calcular qué resultado tiene que dar, y hacer el test correspondiente.  
+Esto va en `camionTest.wtest`.
+
+
+## Se pone picante - total de bultos
 * `totalBultos()`: la suma de la cantidad de bultos que está transportando. KnightRider, arena a granel y residuos radioactivos son 1 bulto. Bumblebee y embalaje de seguridad son dos. Paquete de ladrillos es 1 hasta 100 ladrillos, 2 de 101 a 300, 3 301 o más. Batería antiaérea: 1 si no tiene misiles, 2 si tiene. Contenedor portuario: 1 + los bultos que tiene adentro.
 
 
