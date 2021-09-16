@@ -2,6 +2,10 @@ object knightRider {
 	method peso() { return 500 }
 	
 	method nivelPeligrosidad() { return 10 }
+	
+	method bulto() = 1
+	
+	method sufrirCambios() {}
 }
 
 object bumblebee {
@@ -13,6 +17,10 @@ object bumblebee {
 	method nivelPeligrosidad() { return if (transformadoEnAuto) { 15 } else { 30 }  }
 	
 	method transformar() { transformadoEnAuto = not transformadoEnAuto }
+	
+	method bulto() = 2
+
+	method sufrirCambios() { transformadoEnAuto = false }
 }
 
 object paqueteDeLadrillos {
@@ -24,6 +32,12 @@ object paqueteDeLadrillos {
 	method nivelPeligrosidad() = 2
 	
 	method cantidadLadrillos(cantidad) { cantidadLadrillos = cantidad }
+	
+	method bulto() = if (cantidadLadrillos > 300) 3 else
+					 if (cantidadLadrillos > 100) 2 else
+					 if (cantidadLadrillos > 0)   1 else 0
+
+	method sufrirCambios() { cantidadLadrillos += 12 }
 }
 
 object arenaAGranel {
@@ -35,6 +49,10 @@ object arenaAGranel {
 	method setPeso(nuevoPeso) { peso = nuevoPeso }
 	
 	method nivelPeligrosidad() = 1
+	
+	method bulto() = 1
+	
+	method sufrirCambios() { peso += 20 }
 }
 
 object bateriaAntiaerea {
@@ -48,6 +66,10 @@ object bateriaAntiaerea {
 	method ponerMisiles() { conMisiles = true }
 	
 	method sacarMisiles() { conMisiles = false }
+	
+	method bulto() = if (conMisiles) 2 else 1
+	
+	method sufrirCambios() { conMisiles = true }
 }
 
 object contenedorPortuario {
@@ -61,6 +83,13 @@ object contenedorPortuario {
 	method agregarCosa(nuevaCosa) { cosasContenidas.add(nuevaCosa) }
 	
 	method quitarCosa(cosa) { cosasContenidas.remove(cosa) }
+	
+	method bulto() = 1 + cosasContenidas.sum({cosa => cosa.bulto()})
+	
+	method sufrirCambios() {
+		const numeroCosas = cosasContenidas.size()
+		if (numeroCosas > 0) cosasContenidas.forEach({cosa => cosa.sufrirCambios()})
+	}
 }
 
 object residuosRadioactivos {
@@ -72,6 +101,10 @@ object residuosRadioactivos {
 	method setPeso(nuevoPeso) { peso = nuevoPeso }
 	
 	method nivelPeligrosidad() = 200
+	
+	method bulto() = 1
+	
+	method sufrirCambios() { peso += 15 }
 }
 
 object embalajeDeSeguridad {
@@ -83,4 +116,8 @@ object embalajeDeSeguridad {
 	method nivelPeligrosidad() = cosaAdentro.nivelPeligrosidad() / 2
 	
 	method ponerCosa(cosa) { cosaAdentro = cosa }
+	
+	method bulto() = 2
+	
+	method sufrirCambios() {}
 }

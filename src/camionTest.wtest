@@ -1,0 +1,75 @@
+import cosas.*
+import camion.*
+
+describe "Camion cargado con Bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos." {
+	method initialize() {
+		bumblebee.transformar()
+		arenaAGranel.setPeso(150)
+		bateriaAntiaerea.ponerMisiles()
+		paqueteDeLadrillos.cantidadLadrillos(80)
+		embalajeDeSeguridad.ponerCosa(paqueteDeLadrillos)
+		camion.cargar(bumblebee)
+		camion.cargar(arenaAGranel)
+		camion.cargar(bateriaAntiaerea)
+		camion.cargar(embalajeDeSeguridad)
+	}
+
+	test "Carga a Knight Rider y tiene 5 cosas" {
+		camion.cargar(knightRider)
+		assert.equals(5, camion.cosas().size())
+	}
+	
+	test "Descarga a Bumblebee y tiene 3 cosas" {
+		camion.descargar(bumblebee)
+		assert.equals(3, camion.cosas().size())
+	}
+	
+	test "Todas las cosas cargadas tienen peso par" {
+		assert.that(camion.todoPesoPar())
+	}
+	
+	test "No hay ninguna cosa que pese 35kg y hay una que pesa 800kg(Bumblebee)" {
+		assert.notThat(camion.hayAlgunoQuePesa(35))
+		assert.that(camion.hayAlgunoQuePesa(800))
+	}
+	
+	test "Hay un objeto con 100 de peligrosidad y es la bateria antiaerea" {
+		assert.equals(bateriaAntiaerea, camion.elDeNivel(100))
+	}
+	
+	test "El camion cargado pesa 2410kg" {
+		assert.equals(2410, camion.pesoTotal())
+	}
+	
+	test "El camion cargado no esta excedido de peso(no pasa los 2500kg)" {
+		assert.notThat(camion.excedidoDePeso())
+	}
+	
+	test "Hay dos objetos con 10 o más de peligrosidad(bateria antiaerea y Bumblebee)" {
+		assert.equals(2, camion.objetosQueSuperanPeligrosidad(10).size())
+	}
+	
+	test "La bateria antierea cargada es mas peligrosa que Bumblebee" {
+		assert.that(camion.objetosMasPeligrososQue(bumblebee).contains(bateriaAntiaerea))
+	}
+	
+	test "El camion cargado no puede circular con un nivel maximo de peligrosidad en ruta de 80." {
+		assert.notThat(camion.puedeCircularEnRuta(80))
+	}
+
+	test "El camion cargado puede circular con un nivel maximo de peligrosidad en ruta de 150." {
+		assert.that(camion.puedeCircularEnRuta(150))
+	}
+	
+	test "El camino cargado no tiene nada que pese entre 400 y 500kg" {
+		assert.notThat(camion.tieneAlgoQuePesaEntre(400,500))
+	}
+	
+	test "Bumblebee es la cosa cargada mas pesada" {
+		assert.equals(bumblebee, camion.cosaMasPesada())
+	}
+	
+	test "La suma del peso de las cosas cargadas da 1410" {
+		assert.equals(1410, camion.pesos().sum())
+	}
+}

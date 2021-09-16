@@ -1,0 +1,65 @@
+import cosas.*
+
+describe "Paquete de ladrillos" {
+	test "Con 10 ladrillos pesa 20kg" {
+		paqueteDeLadrillos.cantidadLadrillos(10)
+		assert.equals(20, paqueteDeLadrillos.peso())
+	}
+	
+	test "Su nivel de peligrosidad es 2" {
+		assert.equals(2, paqueteDeLadrillos.nivelPeligrosidad())
+	}
+}
+
+describe "Bateria antiaerea" {
+	test "Inicia sin misiles y no es peligrosa" {
+		assert.equals(0, bateriaAntiaerea.nivelPeligrosidad())
+	}
+	
+	test "Con misiles tiene 100 en nivel de peligrosidad" {
+		bateriaAntiaerea.ponerMisiles()
+		assert.equals(100, bateriaAntiaerea.nivelPeligrosidad())
+	}
+	
+	test "Inicia sin misiles y pesa 200kg" {
+		assert.equals(200, bateriaAntiaerea.peso())
+	}
+	
+	test "Con misiles pesa 100kg más(300kg)" {
+		bateriaAntiaerea.ponerMisiles()
+		assert.equals(300, bateriaAntiaerea.peso())
+	}
+}
+
+describe "Contenedor portuario" {
+	test "Inicia vacio, pesa 100kg y no es peligroso" {
+		assert.equals(100, contenedorPortuario.peso())
+		assert.equals(0, contenedorPortuario.nivelPeligrosidad())
+	}
+	test "Se coloca residuos radioactivos y a Knight Rider, su nivel de peligrosidad es 210" {
+		contenedorPortuario.agregarCosa(residuosRadioactivos)
+		contenedorPortuario.agregarCosa(knightRider)
+		assert.equals(210, contenedorPortuario.nivelPeligrosidad())
+	}
+	test "Se coloca un paquete de 50 ladrillos y a Bumblebee, su peso es de 1000kg" {
+		paqueteDeLadrillos.cantidadLadrillos(50)
+		contenedorPortuario.agregarCosa(paqueteDeLadrillos)
+		contenedorPortuario.agregarCosa(bumblebee)
+		assert.equals(1000, contenedorPortuario.peso())
+	}
+}
+
+describe "Embalaje de seguridad con 30kg de residuos radioactivos" {
+	method initialize() {
+		residuosRadioactivos.setPeso(30)
+		embalajeDeSeguridad.ponerCosa(residuosRadioactivos)
+	}
+	
+	test "El embalaje de seguridad pesa 30kg" {
+		assert.equals(30, embalajeDeSeguridad.peso())
+	}
+	
+	test "Los residuos tienen la mitad de nivel de peligrosidad(100) dentro del embalaje" {
+		assert.equals(100,embalajeDeSeguridad.nivelPeligrosidad())
+	}
+}

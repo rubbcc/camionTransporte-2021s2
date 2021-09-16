@@ -6,6 +6,7 @@ object camion {
 	
 	method cargar(unaCosa) {
 		cosas.add(unaCosa)
+		if (cosas.anyOne() == unaCosa and cosas.size() > 1)	unaCosa.sufrirCambios()
 	}
 	
 	method descargar(cosa) {
@@ -29,6 +30,8 @@ object camion {
 	method puedeCircularEnRuta(nivelMaximoPeligrosidad) {
 		return !self.excedidoDePeso() and cosas.all({cosa => cosa.nivelPeligrosidad() < nivelMaximoPeligrosidad}) 
 	}
+	
+	method totalBultos() = cosas.sum({cosa => cosa.bulto()})
 	
 	method tieneAlgoQuePesaEntre(min, max) = cosas.any({cosa => cosa.peso().between(min,max)})
 	

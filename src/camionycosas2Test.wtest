@@ -1,0 +1,29 @@
+import cosas2.*
+import camion2.*
+
+describe "Camion cargado con Bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos." {
+	method initialize() {
+		bumblebee.transformar()
+		arenaAGranel.setPeso(150)
+		bateriaAntiaerea.ponerMisiles()
+		paqueteDeLadrillos.cantidadLadrillos(80)
+		embalajeDeSeguridad.ponerCosa(paqueteDeLadrillos)
+		camion.cargar(bumblebee)
+		camion.cargar(arenaAGranel)
+		camion.cargar(bateriaAntiaerea)
+		camion.cargar(embalajeDeSeguridad)
+	}
+
+	test "El camion cargado tiene en total 7 bultos" {
+		assert.equals(7, camion.totalBultos())
+	}
+	
+	test "Se descarga y carga 100 veces arena a granel y varia el peso del camion" {
+		const pesoCamion = camion.pesoTotal()
+		100.times({i =>
+			camion.descargar(arenaAGranel)
+			camion.cargar(arenaAGranel)
+		})
+		assert.notEquals(pesoCamion, camion.pesoTotal())
+	}
+}
