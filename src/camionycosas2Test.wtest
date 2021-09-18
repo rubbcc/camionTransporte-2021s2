@@ -18,12 +18,12 @@ describe "Camion cargado con Bumblebee como robot, la arena a granel con 150 kil
 		assert.equals(7, camion.totalBultos())
 	}
 	
-	test "Se descarga y carga 100 veces arena a granel y varia el peso del camion" {
-		const pesoCamion = camion.pesoTotal()
+	test "Se descarga y carga 100 veces arena a granel y sufre cambios(aumenta peso)" {
+		const pesoArenaAGranel = arenaAGranel.peso()
 		100.times({i =>
 			camion.descargar(arenaAGranel)
 			camion.cargar(arenaAGranel)
 		})
-		assert.notEquals(pesoCamion, camion.pesoTotal())
+		assert.notEquals(pesoArenaAGranel, arenaAGranel.peso())
 	}
 }
